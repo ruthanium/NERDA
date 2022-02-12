@@ -178,6 +178,7 @@ class NERDA:
         self.validation_batch_size = validation_batch_size
         self.num_workers = num_workers
         self.train_losses = []
+        self.valid_losses = []
         self.valid_loss = np.nan
         self.quantized = False
         self.halved = False
@@ -194,7 +195,7 @@ class NERDA:
             in 'training_losses' and 'valid_loss' 
             attributes respectively as side-effects.
         """
-        network, train_losses, valid_loss = train_model(network = self.network,
+        network, train_losses, valid_loss, valid_losses = train_model(network = self.network,
                                                         tag_encoder = self.tag_encoder,
                                                         tag_outside = self.tag_outside,
                                                         transformer_tokenizer = self.transformer_tokenizer,
@@ -210,6 +211,7 @@ class NERDA:
         # attach as attributes to class
         setattr(self, "network", network)
         setattr(self, "train_losses", train_losses)
+        setattr(self, "valid_losses", valid_losses)
         setattr(self, "valid_loss", valid_loss)
 
         return "Model trained successfully"

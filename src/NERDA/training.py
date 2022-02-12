@@ -147,6 +147,7 @@ def train_model(network,
     )
 
     train_losses = []
+    valid_losses = []
     best_valid_loss = np.inf
 
     for epoch in range(epochs):
@@ -156,6 +157,7 @@ def train_model(network,
         train_loss = train(network, dl_train, optimizer, device, scheduler, n_tags)
         train_losses.append(train_loss)
         valid_loss = validate(network, dl_validate, device, n_tags)
+        valid_losses.append(valid_loss)
 
         print(f"Train Loss = {train_loss} Valid Loss = {valid_loss}")
 
@@ -166,7 +168,7 @@ def train_model(network,
     # return best model
     network.load_state_dict(best_parameters)
 
-    return network, train_losses, best_valid_loss
+    return network, train_losses, best_valid_loss, valid_losses
 
 
         
